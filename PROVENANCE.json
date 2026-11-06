@@ -1,0 +1,27 @@
+{
+  "requires_custom_engine": true,
+  "repositories": {
+    "horizon": {
+      "url": "https://github.com/horizon-rust/horizon.git",
+      "commit": "3a817511807aa1056cfcf2598a05180737751cc1"
+    },
+    "horizon-mixins": {
+      "url": "https://github.com/horizon-rust/horizon-mixins.git",
+      "commit": "5a64af938ec86b00d53d16a408aabc0038fb3e57"
+    },
+    "orbital-laser": {
+      "url": "https://github.com/Stink-O/orbital-laser.git",
+      "commit": "51468c5f69c8f61cb8982a44700853390eb23ed9",
+      "license": "MIT"
+    }
+  },
+  "omitted": [
+    "original JARs",
+    "decompiled reference",
+    "Minecraft resources",
+    "entire Horizon engine",
+    "Rust toolchains",
+    "targets",
+    "credentials"
+  ]
+}

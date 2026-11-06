@@ -1,0 +1,1 @@
+fn wyr_horse(game:&mut crate::game::Game<'_>) { if !game.native_window() && crate::game::wyr::has(game,"instant_taming") { if let Some(i)=game.mount_index() { let m=&game.mobs[i]; if horizon_client::mobs::equine::is_equine(m.species()) && !m.extra.tame {let id=m.id;game.tame_mount(id);} } } }

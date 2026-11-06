@@ -1,0 +1,1 @@
+fn wyr_loot_function(kind: &str, ctx: &crate::loot::NativeLootContext<'_>, stack: &mut crate::loot::LootStack) { if kind=="wyr:barter" && crate::wyr_shared::barter() {use horizon_core::random::RandomSource;let mut r=horizon_core::random::LegacyRandom::new(ctx.seed);*stack=crate::loot::LootStack::new("minecraft:ender_eye");stack.count=1+r.next_int_bound(4).unwrap_or(0);} }

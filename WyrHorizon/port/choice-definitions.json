@@ -1,0 +1,583 @@
+[
+  {
+    "id": "dummy",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": false
+  },
+  {
+    "id": "mvp",
+    "positive": true,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "invisibility",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "double_mining_speed",
+    "positive": true,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "jump_height_increase",
+    "positive": true,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "any_mob_milkable",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "explosion_immunity",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "fall_damage_immunity",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "edible_leather",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "fire_immunity",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "treasure_fishing_loot",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "bone_meal_on_sneak",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "diamond_ore_drops",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "smelt_inventory",
+    "positive": true,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "fletching_table_use",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "speed_increase",
+    "positive": true,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "enchant_inventory",
+    "positive": true,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "keep_inventory",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "no_cobweb_collision",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "faster_pigs",
+    "positive": true,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "frost_walker",
+    "positive": true,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "egg_ender_pearl",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "remove_negative_choice",
+    "positive": true,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "short",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "knockback",
+    "positive": true,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "infinite_shearing",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "set_items_to_full_stack",
+    "positive": true,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "unbreakable_tools",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "all_advancements",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "faster_climbing",
+    "positive": true,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "creepers_explode_flowers",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "piglins_barter_ender_eyes",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "cheap_trades",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "instant_taming",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "goat_horn_buff",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "no_spider_climbing",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "total_shield_blocking",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "extra_heart",
+    "positive": true,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "healed_by_cactus",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "unlimited_games",
+    "positive": true,
+    "persistent": true,
+    "stackable": false,
+    "random": false
+  },
+  {
+    "id": "no_animations",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "remove_chunk",
+    "positive": false,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "randomized_block_drops",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "hotbar_slot_fov",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "hide_health",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "adventure_mode_in_darkness",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "noclip_shovel_mineable_blocks",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "falling_step_blocks",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "leaves_to_creepers",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "flower_allergy",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "teleport_to_world_height",
+    "positive": false,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "teleport_to_overworld",
+    "positive": false,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "teleport_to_nether",
+    "positive": false,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "evaporate_water",
+    "positive": false,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "beds_always_explode",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "projectiles_instantly_kill",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "inedible_meat",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "random_shaders",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "armor_falls_off_when_jumping",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "disable_crafting_tables",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "nausea_near_fish",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "double_block_item_depletion",
+    "positive": false,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "enderman_carrying",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "thirst_bar",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "vine_boom",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "babify_zombies",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "offset_crosshair",
+    "positive": false,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "shaky_buttons",
+    "positive": false,
+    "persistent": true,
+    "stackable": true,
+    "random": true
+  },
+  {
+    "id": "e_block_damage",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "remove_positive_choice",
+    "positive": false,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "set_items_to_single",
+    "positive": false,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "blinded_by_sunlight",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "inverted_movement",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "unsupported_transparency",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "only_pick_negative_choices",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "vilify_rabbits",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "no_side_block_placement",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "frog_food",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "no_fence_gate_opening",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "explode",
+    "positive": false,
+    "persistent": false,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "sink_boats",
+    "positive": false,
+    "persistent": true,
+    "stackable": false,
+    "random": true
+  },
+  {
+    "id": "no_more_video_games",
+    "positive": false,
+    "persistent": false,
+    "stackable": false,
+    "random": false
+  },
+  {
+    "id": "no_games",
+    "positive": false,
+    "persistent": false,
+    "stackable": false,
+    "random": false
+  }
+]

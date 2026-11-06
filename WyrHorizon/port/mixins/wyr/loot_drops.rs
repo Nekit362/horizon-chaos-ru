@@ -1,0 +1,1 @@
+fn wyr_loot_drops(game: &mut crate::game::Game<'_>, context: &horizon_client::mod_api::NativeLootDrops<'_>, drops: &mut Vec<horizon_client::items::ItemStack>) { crate::game::wyr::loot(game,context,drops); crate::game::wyr::extra::loot_drops(game,context); }

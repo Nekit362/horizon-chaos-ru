@@ -1,0 +1,1 @@
+fn wyr_player_tick(game: &mut crate::game::Game<'_>) { crate::game::wyr::tick_player(game); crate::game::wyr::extra::player_tick(game); crate::game::wyr::advanced::mounted_tame(game); crate::game::wyr::fork_features::tick(game); }

@@ -1,0 +1,1 @@
+fn wyr_health_hud(game: &mut crate::game::Game<'_>, inputs: &horizon_client::hud_layout::HealthInputs, wi: i32, hi: i32, draws: &mut Option<Vec<horizon_client::hud_layout::GuiDraw>>) { crate::game::wyr::health_hud(game,inputs,wi,hi,draws); }

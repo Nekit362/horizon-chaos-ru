@@ -1,0 +1,1 @@
+fn wyr_loot_table_load(id: &str, table: &mut serde_json::Value) { if id=="minecraft:gameplay/piglin_bartering" { if table.get("functions").is_none() {table["functions"]=serde_json::json!([]);} if let Some(f)=table["functions"].as_array_mut() {f.push(serde_json::json!({"function":"wyr:barter"}));} } }

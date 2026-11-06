@@ -1,0 +1,841 @@
+{
+  "player_tick": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      }
+    ],
+    "code": "fn wyr_player_tick(game: &mut crate::game::Game<'_>) { crate::game::wyr::tick_player(game); crate::game::wyr::extra::player_tick(game); crate::game::wyr::advanced::mounted_tame(game); crate::game::wyr::fork_features::tick(game); }"
+  },
+  "server_tick": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "phase",
+        "ty": "horizon_client::mod_api::ServerTickPhase",
+        "value": "phase"
+      }
+    ],
+    "code": "fn wyr_server_tick(game: &mut crate::game::Game<'_>, phase: horizon_client::mod_api::ServerTickPhase) { crate::game::wyr::server_tick(game,phase); }"
+  },
+  "world_saved": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      }
+    ],
+    "code": "fn wyr_world_saved(game: &mut crate::game::Game<'_>) { crate::game::wyr::save(game); }"
+  },
+  "server_stopping": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      }
+    ],
+    "code": "fn wyr_server_stopping(game: &mut crate::game::Game<'_>) { crate::game::wyr::save(game); }"
+  },
+  "net_from_client": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "player",
+        "ty": "u128",
+        "value": "player"
+      },
+      {
+        "name": "channel",
+        "ty": "&str",
+        "value": "channel"
+      },
+      {
+        "name": "data",
+        "ty": "&[u8]",
+        "value": "data"
+      }
+    ],
+    "code": "fn wyr_net_from_client(game: &mut crate::game::Game<'_>, player: u128, channel: &str, data: &[u8]) { crate::game::wyr::receive_server(game,player,channel,data); }"
+  },
+  "net_from_server": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "channel",
+        "ty": "&str",
+        "value": "channel"
+      },
+      {
+        "name": "data",
+        "ty": "&[u8]",
+        "value": "data"
+      }
+    ],
+    "code": "fn wyr_net_from_server(game: &mut crate::game::Game<'_>, channel: &str, data: &[u8]) { crate::game::wyr::receive_client(game,channel,data); }"
+  },
+  "client_disconnecting": {
+    "bindings": [],
+    "code": "fn wyr_client_disconnecting() { crate::game::wyr::reset_client(); }"
+  },
+  "frame": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      }
+    ],
+    "code": "fn wyr_frame(game: &mut crate::game::Game<'_>) { crate::game::wyr::frame(game); if game.player.is_some(){crate::game::wyr::fork_features::prepare_shovel(game);} }"
+  },
+  "key": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "key",
+        "ty": "&str",
+        "value": "key"
+      },
+      {
+        "name": "pressed",
+        "ty": "bool",
+        "value": "pressed"
+      }
+    ],
+    "code": "fn wyr_key(game: &mut crate::game::Game<'_>, key: &str, pressed: bool) { crate::game::wyr::key(game,key,pressed); }"
+  },
+  "command": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "command",
+        "ty": "&str",
+        "value": "command"
+      },
+      {
+        "name": "ran",
+        "ty": "&mut bool",
+        "value": "&mut *ran"
+      }
+    ],
+    "code": "fn wyr_command(game: &mut crate::game::Game<'_>, command: &str, ran: &mut bool) { crate::game::wyr::command(game,command,ran); }"
+  },
+  "mods": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "mods",
+        "ty": "&mut Vec<horizon_client::mod_api::NativeMod>",
+        "value": "&mut *mods"
+      }
+    ],
+    "code": "fn wyr_mods(game: &mut crate::game::Game<'_>, mods: &mut Vec<horizon_client::mod_api::NativeMod>) { crate::game::wyr::listed(mods); }"
+  },
+  "gui_render_post": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&crate::game::Game<'_>",
+        "value": "&*self"
+      },
+      {
+        "name": "batch",
+        "ty": "&mut horizon_client::hud::HudBatch",
+        "value": "&mut *batch"
+      }
+    ],
+    "code": "fn wyr_gui_render_post(game: &crate::game::Game<'_>, batch: &mut horizon_client::hud::HudBatch) { crate::game::wyr::draw(game,batch); }"
+  },
+  "hud": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "batch",
+        "ty": "&mut horizon_client::hud::HudBatch",
+        "value": "&mut *batch"
+      }
+    ],
+    "code": "fn wyr_hud(game: &mut crate::game::Game<'_>, batch: &mut horizon_client::hud::HudBatch) { crate::game::wyr::hud(game,batch); }"
+  },
+  "screen_mouse_button_pressed_pre": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&crate::game::Game<'_>",
+        "value": "&*self"
+      },
+      {
+        "name": "button",
+        "ty": "i32",
+        "value": "button"
+      },
+      {
+        "name": "canceled",
+        "ty": "&mut bool",
+        "value": "&mut *canceled"
+      }
+    ],
+    "code": "fn wyr_screen_mouse_button_pressed_pre(game: &crate::game::Game<'_>, button: i32, canceled: &mut bool) { crate::game::wyr::mouse(game,button,canceled); }"
+  },
+  "movement_input": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&crate::game::Game<'_>",
+        "value": "&*self"
+      },
+      {
+        "name": "forward",
+        "ty": "&mut f32",
+        "value": "&mut *forward"
+      },
+      {
+        "name": "strafe",
+        "ty": "&mut f32",
+        "value": "&mut *strafe"
+      }
+    ],
+    "code": "fn wyr_movement_input(game: &crate::game::Game<'_>, forward: &mut f32, strafe: &mut f32) { crate::game::wyr::movement(forward,strafe); }"
+  },
+  "compute_fov": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&crate::game::Game<'_>",
+        "value": "&*self"
+      },
+      {
+        "name": "degrees",
+        "ty": "&mut f32",
+        "value": "&mut *degrees"
+      }
+    ],
+    "code": "fn wyr_compute_fov(game: &crate::game::Game<'_>, degrees: &mut f32) { crate::game::wyr::fov(game,degrees); }"
+  },
+  "health_hud": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "inputs",
+        "ty": "&horizon_client::hud_layout::HealthInputs",
+        "value": "inputs"
+      },
+      {
+        "name": "wi",
+        "ty": "i32",
+        "value": "wi"
+      },
+      {
+        "name": "hi",
+        "ty": "i32",
+        "value": "hi"
+      },
+      {
+        "name": "draws",
+        "ty": "&mut Option<Vec<horizon_client::hud_layout::GuiDraw>>",
+        "value": "&mut *draws"
+      }
+    ],
+    "code": "fn wyr_health_hud(game: &mut crate::game::Game<'_>, inputs: &horizon_client::hud_layout::HealthInputs, wi: i32, hi: i32, draws: &mut Option<Vec<horizon_client::hud_layout::GuiDraw>>) { crate::game::wyr::health_hud(game,inputs,wi,hi,draws); }"
+  },
+  "gui_layer_pre": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "layer",
+        "ty": "&str",
+        "value": "layer"
+      },
+      {
+        "name": "batch",
+        "ty": "&mut horizon_client::hud::HudBatch",
+        "value": "&mut *batch"
+      }
+    ],
+    "code": "fn wyr_gui_layer_pre(game: &mut crate::game::Game<'_>, layer: &str, batch: &mut horizon_client::hud::HudBatch) { crate::game::wyr::layer_pre(layer,batch); }"
+  },
+  "gui_layer_post": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "layer",
+        "ty": "&str",
+        "value": "layer"
+      },
+      {
+        "name": "batch",
+        "ty": "&mut horizon_client::hud::HudBatch",
+        "value": "&mut *batch"
+      }
+    ],
+    "code": "fn wyr_gui_layer_post(game: &mut crate::game::Game<'_>, layer: &str, batch: &mut horizon_client::hud::HudBatch) { crate::game::wyr::layer_post(layer,batch); }"
+  },
+  "living_incoming_damage": {
+    "bindings": [
+      {
+        "name": "entity",
+        "ty": "i32",
+        "value": "entity"
+      },
+      {
+        "name": "kind",
+        "ty": "&str",
+        "value": "kind"
+      },
+      {
+        "name": "damage_type",
+        "ty": "&str",
+        "value": "damage_type"
+      },
+      {
+        "name": "amount",
+        "ty": "&mut f32",
+        "value": "&mut *amount"
+      },
+      {
+        "name": "canceled",
+        "ty": "&mut bool",
+        "value": "&mut *canceled"
+      }
+    ],
+    "code": "fn wyr_living_incoming_damage(entity: i32, kind: &str, damage_type: &str, amount: &mut f32, canceled: &mut bool) { crate::game::wyr::damage(entity,kind,damage_type,amount,canceled); }"
+  },
+  "living_knockback_v2": {
+    "bindings": [
+      {
+        "name": "attacker",
+        "ty": "i32",
+        "value": "attacker"
+      },
+      {
+        "name": "strength",
+        "ty": "&mut f64",
+        "value": "&mut *strength"
+      }
+    ],
+    "code": "fn wyr_living_knockback_v2(attacker: i32, strength: &mut f64) { crate::game::wyr::knockback(attacker,strength); }"
+  },
+  "right_click_block": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "pos",
+        "ty": "[i32; 3]",
+        "value": "pos"
+      },
+      {
+        "name": "face",
+        "ty": "[i32; 3]",
+        "value": "face"
+      },
+      {
+        "name": "canceled",
+        "ty": "&mut bool",
+        "value": "&mut *canceled"
+      }
+    ],
+    "code": "fn wyr_right_click_block(game: &mut crate::game::Game<'_>, pos: [i32; 3], face: [i32; 3], canceled: &mut bool) { crate::game::wyr::right_click(game,pos,face,canceled); crate::game::wyr::extra::right_click_block(game,pos,canceled); crate::game::wyr::table::click(game,pos,canceled); }"
+  },
+  "place_block": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      }
+    ],
+    "code": "fn wyr_place_block(game: &mut crate::game::Game<'_>) { crate::game::wyr::placed(game); }"
+  },
+  "can_eat": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&crate::game::Game<'_>",
+        "value": "&*self"
+      },
+      {
+        "name": "stack",
+        "ty": "&horizon_client::items::ItemStack",
+        "value": "stack"
+      },
+      {
+        "name": "can_eat",
+        "ty": "&mut bool",
+        "value": "&mut *can_eat"
+      }
+    ],
+    "code": "fn wyr_can_eat(game: &crate::game::Game<'_>, stack: &horizon_client::items::ItemStack, can_eat: &mut bool) { crate::game::wyr::can_eat(game,stack,can_eat); }"
+  },
+  "living_entity_use_item_finish": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "stack",
+        "ty": "&horizon_client::items::ItemStack",
+        "value": "stack"
+      },
+      {
+        "name": "result",
+        "ty": "&mut Option<horizon_client::items::ItemStack>",
+        "value": "&mut *result"
+      }
+    ],
+    "code": "fn wyr_living_entity_use_item_finish(game: &mut crate::game::Game<'_>, stack: &horizon_client::items::ItemStack, result: &mut Option<horizon_client::items::ItemStack>) { crate::game::wyr::consumed(game,stack,result); }"
+  },
+  "player_jump": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      }
+    ],
+    "code": "fn wyr_player_jump(game: &mut crate::game::Game<'_>) { crate::game::wyr::jumped(game); }"
+  },
+  "loot_drops": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "context",
+        "ty": "&horizon_client::mod_api::NativeLootDrops<'_>",
+        "value": "context"
+      },
+      {
+        "name": "drops",
+        "ty": "&mut Vec<horizon_client::items::ItemStack>",
+        "value": "&mut *drops"
+      }
+    ],
+    "code": "fn wyr_loot_drops(game: &mut crate::game::Game<'_>, context: &horizon_client::mod_api::NativeLootDrops<'_>, drops: &mut Vec<horizon_client::items::ItemStack>) { crate::game::wyr::loot(game,context,drops); crate::game::wyr::extra::loot_drops(game,context); }"
+  },
+  "player_respawned": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "player",
+        "ty": "u128",
+        "value": "player"
+      }
+    ],
+    "code": "fn wyr_player_respawned(game: &mut crate::game::Game<'_>, player: u128) { crate::game::wyr::respawn(game,player); }"
+  },
+  "item_damaged": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "amount",
+        "ty": "&mut i32",
+        "value": "&mut *amount"
+      },
+      {
+        "name": "cancel",
+        "ty": "&mut bool",
+        "value": "&mut *cancel"
+      }
+    ],
+    "code": "fn wyr_item_damaged(game: &mut crate::game::Game<'_>, amount: &mut i32, cancel: &mut bool) { crate::game::wyr::item_damage(game,amount,cancel); }"
+  },
+  "modify_default_components": {
+    "bindings": [
+      {
+        "name": "item",
+        "ty": "&str",
+        "value": "item"
+      },
+      {
+        "name": "components",
+        "ty": "&mut serde_json::Map<String, serde_json::Value>",
+        "value": "&mut *components"
+      }
+    ],
+    "code": "fn wyr_modify_default_components(item: &str, components: &mut serde_json::Map<String, serde_json::Value>) { if item==\"minecraft:leather\" { components.insert(\"minecraft:food\".into(),serde_json::json!({\"nutrition\":2,\"saturation\":0.1})); components.insert(\"minecraft:consumable\".into(),serde_json::json!({\"consume_seconds\":1.6,\"animation\":\"eat\",\"sound\":\"minecraft:entity.generic.eat\"})); } }"
+  },
+  "shield_angle": {
+    "target": "horizon_client::game::shield::Game<'_>::player_blocking",
+    "kind": "MODIFY_VARIABLE",
+    "variable": {
+      "name": "angle",
+      "ordinal": 0,
+      "at": "STORE"
+    },
+    "require": 1,
+    "ordinal": 0,
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&crate::game::Game<'_>",
+        "value": "&*self"
+      },
+      {
+        "name": "value",
+        "ty": "f64",
+        "value": "$value"
+      }
+    ],
+    "code": "fn wyr_shield_angle(game:&crate::game::Game<'_>,value:f64)->f64 { crate::game::wyr::shield_angle(game,value) }"
+  },
+  "interact_entity": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "entity",
+        "ty": "i32",
+        "value": "entity"
+      },
+      {
+        "name": "kind",
+        "ty": "&str",
+        "value": "kind"
+      },
+      {
+        "name": "stack",
+        "ty": "Option<&horizon_client::items::ItemStack>",
+        "value": "stack"
+      },
+      {
+        "name": "claimed",
+        "ty": "&mut bool",
+        "value": "&mut *claimed"
+      }
+    ],
+    "code": "fn wyr_interact_entity(game: &mut crate::game::Game<'_>, entity: i32, kind: &str, stack: Option<&horizon_client::items::ItemStack>, claimed: &mut bool) {crate::game::wyr::advanced::enter_action(game);  crate::game::wyr::extra::interact_entity(game,entity,kind,stack,claimed); crate::game::wyr::advanced::tame_interact(game,entity,stack,claimed); }"
+  },
+  "player_toggle_sneak": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "sneaking",
+        "ty": "bool",
+        "value": "sneaking"
+      }
+    ],
+    "code": "fn wyr_player_toggle_sneak(game: &mut crate::game::Game<'_>, sneaking: bool) { crate::game::wyr::extra::toggle_sneak(game,sneaking); }"
+  },
+  "living_entity_use_item_start": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "stack",
+        "ty": "&horizon_client::items::ItemStack",
+        "value": "stack"
+      },
+      {
+        "name": "canceled",
+        "ty": "&mut bool",
+        "value": "&mut *canceled"
+      }
+    ],
+    "code": "fn wyr_living_entity_use_item_start(game: &mut crate::game::Game<'_>, stack: &horizon_client::items::ItemStack, canceled: &mut bool) { crate::game::wyr::extra::use_item_start(game,stack,canceled); }"
+  },
+  "use_item": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      }
+    ],
+    "code": "fn wyr_use_item(game: &mut crate::game::Game<'_>) { crate::game::wyr::advanced::enter_action(game); }"
+  },
+  "fishing_treasure": {
+    "target": "horizon_client::game::fishing::fishing_loot",
+    "kind": "MODIFY_VARIABLE",
+    "bindings": [
+      {
+        "name": "value",
+        "ty": "&'static str",
+        "value": "$value"
+      }
+    ],
+    "code": "fn wyr_treasure(value:&'static str)->&'static str { crate::game::wyr::advanced::fishing_table(value) }",
+    "variable": {
+      "name": "table",
+      "ordinal": 0,
+      "at": "STORE"
+    },
+    "require": 1,
+    "ordinal": 0
+  },
+  "level_tick_pre": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "dimension",
+        "ty": "&str",
+        "value": "dimension"
+      }
+    ],
+    "code": "fn wyr_level_tick_pre(game: &mut crate::game::Game<'_>, dimension: &str) { crate::game::wyr::advanced::level_pre(game,dimension); crate::game::wyr::fork_features::prepare_shovel(game); }"
+  },
+  "loot_table_load": {
+    "bindings": [
+      {
+        "name": "id",
+        "ty": "&str",
+        "value": "id"
+      },
+      {
+        "name": "table",
+        "ty": "&mut serde_json::Value",
+        "value": "&mut *table"
+      }
+    ],
+    "code": "fn wyr_loot_table_load(id: &str, table: &mut serde_json::Value) { if id==\"minecraft:gameplay/piglin_bartering\" { if table.get(\"functions\").is_none() {table[\"functions\"]=serde_json::json!([]);} if let Some(f)=table[\"functions\"].as_array_mut() {f.push(serde_json::json!({\"function\":\"wyr:barter\"}));} } }"
+  },
+  "loot_function": {
+    "bindings": [
+      {
+        "name": "kind",
+        "ty": "&str",
+        "value": "kind"
+      },
+      {
+        "name": "ctx",
+        "ty": "&crate::loot::NativeLootContext<'_>",
+        "value": "ctx"
+      },
+      {
+        "name": "stack",
+        "ty": "&mut crate::loot::LootStack",
+        "value": "&mut *stack"
+      }
+    ],
+    "code": "fn wyr_loot_function(kind: &str, ctx: &crate::loot::NativeLootContext<'_>, stack: &mut crate::loot::LootStack) { if kind==\"wyr:barter\" && crate::wyr_shared::barter() {use horizon_core::random::RandomSource;let mut r=horizon_core::random::LegacyRandom::new(ctx.seed);*stack=crate::loot::LootStack::new(\"minecraft:ender_eye\");stack.count=1+r.next_int_bound(4).unwrap_or(0);} }"
+  },
+  "cheap_trade": {
+    "target": "horizon_client::game::trading::Game<'_>::open_merchant_state",
+    "kind": "OVERWRITE",
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "state",
+        "ty": "crate::game::trading::MerchantState",
+        "value": "state"
+      }
+    ],
+    "code": "fn wyr_trade(game:&mut crate::game::Game<'_>,mut state:crate::game::trading::MerchantState) {\n           if state.session.villager && crate::game::wyr::has(game,\"cheap_trades\") {\n               for offer in &mut state.session.offers {offer.special_price_diff=-(offer.base_cost_a.stack.count as i32);}\n           }\n           let mut s=crate::game::stations::Station::new_kind(crate::game::stations::Kind::Merchant,[0,0,0]);\n           s.merchant=Some(Box::new(state));game.station=Some(s);game.screen=crate::game::Screen::Inventory;game.capture(false);game.right=false;\n       }"
+  },
+  "hears_projectile_impacts": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&crate::game::Game<'_>",
+        "value": "&*self"
+      },
+      {
+        "name": "hears",
+        "ty": "&mut bool",
+        "value": "&mut *hears"
+      }
+    ],
+    "code": "fn wyr_hears_projectile_impacts(game: &crate::game::Game<'_>, hears: &mut bool) { *hears=true; }"
+  },
+  "projectile_impact": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "dimension",
+        "ty": "&str",
+        "value": "dimension"
+      },
+      {
+        "name": "kind",
+        "ty": "&str",
+        "value": "kind"
+      },
+      {
+        "name": "owner",
+        "ty": "u32",
+        "value": "owner"
+      },
+      {
+        "name": "at",
+        "ty": "[f64;3]",
+        "value": "at"
+      },
+      {
+        "name": "canceled",
+        "ty": "&mut bool",
+        "value": "&mut *canceled"
+      }
+    ],
+    "code": "fn wyr_projectile_impact(game: &mut crate::game::Game<'_>, dimension: &str, kind: &str, owner: u32, at: [f64;3], canceled: &mut bool) { crate::game::wyr::advanced::egg_impact(game,dimension,kind,owner,at,*canceled); }"
+  },
+  "block_entity": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "block",
+        "ty": "&str",
+        "value": "block"
+      },
+      {
+        "name": "entity",
+        "ty": "&mut Option<(String, horizon_world::nbt::Compound)>",
+        "value": "&mut *entity"
+      }
+    ],
+    "code": "fn wyr_block_entity(game: &mut crate::game::Game<'_>, block: &str, entity: &mut Option<(String, horizon_world::nbt::Compound)>) { crate::game::wyr::table::create(block,entity); }"
+  },
+  "block_entity_ticks": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&crate::game::Game<'_>",
+        "value": "&*self"
+      },
+      {
+        "name": "block",
+        "ty": "&str",
+        "value": "block"
+      },
+      {
+        "name": "ticks",
+        "ty": "&mut bool",
+        "value": "&mut *ticks"
+      }
+    ],
+    "code": "fn wyr_block_entity_ticks(game: &crate::game::Game<'_>, block: &str, ticks: &mut bool) { if block==crate::game::wyr::table::TABLE {*ticks=true;} }"
+  },
+  "block_entity_tick": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&mut crate::game::Game<'_>",
+        "value": "&mut *self"
+      },
+      {
+        "name": "entity",
+        "ty": "&mut horizon_client::containers::ModBlockEntity",
+        "value": "&mut *entity"
+      }
+    ],
+    "code": "fn wyr_block_entity_tick(game: &mut crate::game::Game<'_>, entity: &mut horizon_client::containers::ModBlockEntity) { crate::game::wyr::table::tick(game,entity); }"
+  },
+  "block_entity_update_tag": {
+    "bindings": [
+      {
+        "name": "entity",
+        "ty": "&horizon_client::containers::ModBlockEntity",
+        "value": "entity"
+      },
+      {
+        "name": "tag",
+        "ty": "&mut Option<horizon_world::nbt::Compound>",
+        "value": "&mut *tag"
+      }
+    ],
+    "code": "fn wyr_block_entity_update_tag(entity: &horizon_client::containers::ModBlockEntity, tag: &mut Option<horizon_world::nbt::Compound>) { if entity.id==crate::game::wyr::table::TABLE {*tag=Some(entity.nbt.clone());} }"
+  },
+  "block_entity_submit": {
+    "bindings": [
+      {
+        "name": "game",
+        "ty": "&crate::game::Game<'_>",
+        "value": "&*self"
+      },
+      {
+        "name": "entity",
+        "ty": "&horizon_client::containers::ModBlockEntity",
+        "value": "entity"
+      },
+      {
+        "name": "draw",
+        "ty": "&mut crate::game::native_block_entity_draw::BlockEntityDraw",
+        "value": "&mut *draw"
+      }
+    ],
+    "code": "fn wyr_block_entity_submit(game: &crate::game::Game<'_>, entity: &horizon_client::containers::ModBlockEntity, draw: &mut crate::game::native_block_entity_draw::BlockEntityDraw) { crate::game::wyr::table::render(game,entity,draw); }"
+  }
+}

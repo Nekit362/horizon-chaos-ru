@@ -1,0 +1,1 @@
+fn wyr_projectile_impact(game: &mut crate::game::Game<'_>, dimension: &str, kind: &str, owner: u32, at: [f64;3], canceled: &mut bool) { crate::game::wyr::advanced::egg_impact(game,dimension,kind,owner,at,*canceled); }

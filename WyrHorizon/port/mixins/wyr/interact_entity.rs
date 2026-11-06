@@ -1,0 +1,1 @@
+fn wyr_interact_entity(game: &mut crate::game::Game<'_>, entity: i32, kind: &str, stack: Option<&horizon_client::items::ItemStack>, claimed: &mut bool) {crate::game::wyr::advanced::enter_action(game);  crate::game::wyr::extra::interact_entity(game,entity,kind,stack,claimed); crate::game::wyr::advanced::tame_interact(game,entity,stack,claimed); }

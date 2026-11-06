@@ -1,0 +1,68 @@
+{
+  "implemented_ids": ["any_mob_milkable", "bone_meal_on_sneak", "fletching_table_use", "infinite_shearing", "goat_horn_buff", "frost_walker", "vine_boom", "vilify_rabbits"],
+  "runtime_embedding": "pub mod extra { /* src/extra.rs */ }",
+  "callbacks": {
+    "interact_entity": {
+      "hook": "native_interact_entity",
+      "signature": "pub fn interact_entity(game: &mut Game<'_>, entity: i32, kind: &str, stack: Option<&ItemStack>, claimed: &mut bool)",
+      "bindings": [
+        {"name":"game","ty":"&mut crate::game::Game<'_>","value":"&mut *self"},
+        {"name":"entity","ty":"i32","value":"entity"},
+        {"name":"kind","ty":"&str","value":"kind"},
+        {"name":"stack","ty":"Option<&horizon_client::items::ItemStack>","value":"stack"},
+        {"name":"claimed","ty":"&mut bool","value":"&mut *claimed"}
+      ],
+      "call": "crate::game::wyr::extra::interact_entity(game,entity,kind,stack,claimed);"
+    },
+    "player_toggle_sneak": {
+      "hook": "native_player_toggle_sneak",
+      "signature": "pub fn toggle_sneak(game: &mut Game<'_>, sneaking: bool)",
+      "bindings": [
+        {"name":"game","ty":"&mut crate::game::Game<'_>","value":"&mut *self"},
+        {"name":"sneaking","ty":"bool","value":"sneaking"}
+      ],
+      "call": "crate::game::wyr::extra::toggle_sneak(game,sneaking);"
+    },
+    "right_click_block": {
+      "hook": "native_right_click_block",
+      "signature": "pub fn right_click_block(game: &mut Game<'_>, pos: [i32;3], canceled: &mut bool)",
+      "bindings": [
+        {"name":"game","ty":"&mut crate::game::Game<'_>","value":"&mut *self"},
+        {"name":"pos","ty":"[i32;3]","value":"pos"},
+        {"name":"canceled","ty":"&mut bool","value":"&mut *canceled"}
+      ],
+      "call": "crate::game::wyr::extra::right_click_block(game,pos,canceled);"
+    },
+    "loot_drops": {
+      "hook": "native_loot_drops",
+      "signature": "pub fn loot_drops(game: &mut Game<'_>, context: &horizon_client::mod_api::NativeLootDrops<'_>)",
+      "bindings": [
+        {"name":"game","ty":"&mut crate::game::Game<'_>","value":"&mut *self"},
+        {"name":"context","ty":"&horizon_client::mod_api::NativeLootDrops<'_>","value":"context"}
+      ],
+      "call": "crate::game::wyr::extra::loot_drops(game,context);"
+    },
+    "living_entity_use_item_start": {
+      "hook": "native_living_entity_use_item_start",
+      "signature": "pub fn use_item_start(game: &mut Game<'_>, stack: &ItemStack, canceled: &mut bool)",
+      "bindings": [
+        {"name":"game","ty":"&mut crate::game::Game<'_>","value":"&mut *self"},
+        {"name":"stack","ty":"&horizon_client::items::ItemStack","value":"stack"},
+        {"name":"canceled","ty":"&mut bool","value":"&mut *canceled"}
+      ],
+      "call": "crate::game::wyr::extra::use_item_start(game,stack,canceled);"
+    },
+    "player_tick": {
+      "hook": "native_player_tick",
+      "signature": "pub fn player_tick(game: &mut Game<'_>)",
+      "append_after_existing_callback": true,
+      "reason": "The parent callback must publish the current player's choices first.",
+      "bindings": [
+        {"name":"game","ty":"&mut crate::game::Game<'_>","value":"&mut *self"}
+      ],
+      "call": "crate::game::wyr::extra::player_tick(game);"
+    }
+  },
+  "not_implemented_here": ["piglins_barter_ender_eyes", "instant_taming", "explode", "sink_boats", "frog_food"],
+  "verification": "Source signatures checked; waiting for compilation in the parent's fresh patched workspace."
+}

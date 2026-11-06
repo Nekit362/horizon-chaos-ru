@@ -1,0 +1,1 @@
+fn wyr_block_entity_update_tag(entity: &horizon_client::containers::ModBlockEntity, tag: &mut Option<horizon_world::nbt::Compound>) { if entity.id==crate::game::wyr::table::TABLE {*tag=Some(entity.nbt.clone());} }

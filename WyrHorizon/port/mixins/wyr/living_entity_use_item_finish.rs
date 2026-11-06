@@ -1,0 +1,1 @@
+fn wyr_living_entity_use_item_finish(game: &mut crate::game::Game<'_>, stack: &horizon_client::items::ItemStack, result: &mut Option<horizon_client::items::ItemStack>) { crate::game::wyr::consumed(game,stack,result); }
