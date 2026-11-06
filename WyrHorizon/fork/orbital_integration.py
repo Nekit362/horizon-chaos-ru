@@ -128,6 +128,7 @@ def apply(root):
     glue=(bundle/'glue.rs').read_text(encoding='utf8')
     # One user-visible mod switch controls WYR, Upgrader and Orbital together.
     glue=glue.replace('game.native_on(ID)', 'game.native_on("wyr")')
+    glue=glue.replace('t.starts_with("Type /orbital give") && no_content(game)','t.starts_with("Type /orbital give")')
     gate='if permission < CONSOLE_LEVEL && !crate::game::wyr::catastrophes::authorized_owner(game,player) {'
     glue=replace_once(glue,'if permission < CONSOLE_LEVEL {',gate)
     glue=replace_once(glue,'!horizon_protocol::mod_list::local().iter().any(|m| m.id == ID)', '!horizon_protocol::mod_list::local().iter().any(|m| m.id == "wyr")')
@@ -154,7 +155,7 @@ pub(in crate::game) fn wyr_start(game:&mut Game<'_>, number:u8, at:[f64;3])->boo
             'client_level_load','client_level_unload'}
     for spec in manifest['injection']:
         if spec['id'] in active: inject(stage,spec,hooks)
-    return {'orbital_commit':__import__('subprocess').check_output(['git','-C',str(SOURCE),'rev-parse','HEAD'],text=True).strip(),'catastrophes':6}
+    return {'orbital_commit':'51468c5f69c8f61cb8982a44700853390eb23ed9','catastrophes':6}
 
 if __name__=='__main__':
     print(apply(Path(sys.argv[1])))

@@ -24,6 +24,7 @@ authors = ["EightSidedSquare (WYR)", "EXEcheINZ (Upgrader)", "Stink-O (Orbital L
 api = "0.2"
 side = "both"
 capabilities = ["registries"]
+namespaces = ["upgrader", "orbital"]
 '''
 
 
@@ -79,6 +80,12 @@ def content_entries(upgrader=DEFAULT_UPGRADER, wyr_jar=None, upgrader_jar=None):
                 if name.startswith(("assets/", "data/")):
                     local[name] = path.read_bytes()
         for name, data in local.items():
+            if name.startswith('data/upgrader/horizon/'):
+                name=name.replace('data/upgrader/horizon/','data/wyr/horizon/',1)
+            if name=='assets/upgrader/items/upgrader.json':
+                name='assets/wyr/items/upgrader.json'
+            if name.endswith('.json'):
+                data=data.replace(b'upgrader:upgrader',b'wyr:upgrader')
             put(entries, folded, name, data, label)
     orbital = BASE / "orbital-laser"
     for folder in ("orbital-laser-mod", "orbital-sounds"):
@@ -88,6 +95,7 @@ def content_entries(upgrader=DEFAULT_UPGRADER, wyr_jar=None, upgrader_jar=None):
             if path.is_file():
                 name = path.relative_to(orbital / folder).as_posix()
                 if name.startswith(("assets/", "data/")):
+                    if name.startswith('data/orbital/horizon/'):continue
                     put(entries, folded, name, path.read_bytes(), "Orbital/" + folder)
     # Fail early when source delivery has not been supplied the original WYR/Upgrader assets.
     for required in ("assets/wyr/sounds.json", "assets/upgrader/textures/item/upgrader.png", "assets/orbital/sounds.json"):
@@ -96,6 +104,9 @@ def content_entries(upgrader=DEFAULT_UPGRADER, wyr_jar=None, upgrader_jar=None):
     for name, data in entries.items():
         if name.endswith(".json"):
             json.loads(data.decode("utf-8"))
+    language=json.loads(entries['assets/wyr/lang/ru_ru.json'])
+    language['item.wyr.upgrader']='Апгрейдер'
+    entries['assets/wyr/lang/ru_ru.json']=json.dumps(language,ensure_ascii=False,indent=2).encode('utf8')
     entries["horizon-mod.toml"] = MANIFEST.encode("utf-8")
     entries["licenses/Orbital-Laser-MIT.txt"] = (orbital / "LICENSE").read_bytes()
     entries["licenses/Orbital-Laser-NOTICE.txt"] = (orbital / "NOTICE").read_bytes()

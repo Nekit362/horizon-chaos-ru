@@ -25,6 +25,8 @@
 
 Готовая выдача для Windows публикуется в Releases вместе с инструкцией запуска. Нужны ваши собственные установленные Minecraft Java 26.3 и подготовленные ресурсы Horizon; файлы Minecraft в репозитории отсутствуют. Проверяйте катастрофы в отдельном мире: исходные эффекты изменяют ландшафт.
 
+Распакуйте Windows-пакет и запустите **Start.cmd**. Он создаст отдельную папку `game`, включит общий пакет ресурсов и выберет русский язык для нового профиля. Существующие миры из лаунчера автоматически не подключаются.
+
 Клавиши: **V** — WYR, **U** — Upgrader. Команды: `/wyr open`, `/wyr list`, `/wyr clear`, `/wyr rate <секунды>`. Изменение интервала и сброс доступны оператору.
 
 ## Пересборка
@@ -46,3 +48,9 @@ py -3.9 bootstrap.py --build
 ## Источники
 
 WYR — EightSidedSquare; Upgrader — EXEcheINZ. Исходные JAR и декомпилированные файлы в репозиторий не включены; оригинальные ресурсы берутся из ваших JAR при личной упаковке. Orbital Laser — [Stink-O/orbital-laser](https://github.com/Stink-O/orbital-laser), MIT; его лицензия и NOTICE сохранены. Версии зависимостей: [PROVENANCE.json](PROVENANCE.json).
+
+## Скриншоты игрового теста
+
+![Дилемма WYR](docs/screenshots/wyr.png)
+![Одна катастрофа с отсчётом](docs/screenshots/catastrophe.png)
+![Вращение колеса Upgrader](docs/screenshots/roulette.png)

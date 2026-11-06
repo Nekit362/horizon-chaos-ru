@@ -17,7 +17,7 @@ def main():
     subprocess.run([sys.executable,str(ROOT/'refresh_stage.py'),str(stage)],check=True)
     game=stage/'crates/horizon-client/src/game.rs'
     text=game.read_text(encoding='utf8');a=text.index('pub(crate) mod upgrader_hardcore {');b=text.index('pub(crate) mod wyr {',a)
-    upgrader=text[a:b].replace('game.native_on(ID)','game.native_on("wyr")')
+    upgrader=text[a:b].replace('game.native_on(ID)','game.native_on("wyr")').replace('"upgrader:upgrader"','"wyr:upgrader"')
     # Keep its distinct screen/attachment IDs; register a single visible mod.
     start=upgrader.index('pub(in crate::game) fn mods(') if 'pub(in crate::game) fn mods(' in upgrader else upgrader.index('pub fn mods(')
     brace=upgrader.index('{',start);depth=1;i=brace+1
@@ -31,7 +31,7 @@ def main():
     text=path.read_text(encoding='utf8');marker='pub mod wyr_shared {'
     if marker not in text:raise RuntimeError('Stage must first be produced by horizon-mixins apply')
     text=text[:text.index(marker)]+marker+'\n'+(ROOT/'port/src/shared.rs').read_text(encoding='utf8')+'\n}\n'
-    path.write_text(text,encoding='utf8')
+    if path.read_text(encoding='utf8')!=text:path.write_text(text,encoding='utf8')
     run_module('gameplay_patches',stage)
     if args.visual:
         gfx=stage/'crates/horizon-client-render/src/gfx.rs'

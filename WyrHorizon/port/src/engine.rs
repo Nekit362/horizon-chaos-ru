@@ -183,6 +183,8 @@ pub fn server_tick(game: &mut Game<'_>, phase: horizon_client::mod_api::ServerTi
     }
     load(game);
     advanced::nickname_tick(game);
+    horizon_world::wyr_shared::set_host_uuid(game.lan.as_ref().and_then(|h|h.hub.singleplayer_owner));
+    catastrophes::refresh_host(game);
     let commands = SERVER.with(|s| {
         let mut s = s.borrow_mut();
         s.ticks += 1;

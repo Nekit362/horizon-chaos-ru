@@ -13,6 +13,7 @@ pub fn player_count(uuid:u128,id:&str)->u32 {state().lock().ok().and_then(|s|s.p
 pub fn guest_count(conn:u32,id:&str)->u32 {state().lock().ok().and_then(|s|s.guests.get(&conn).and_then(|uuid|s.players.get(uuid)).and_then(|f|f.get(id)).copied()).unwrap_or(0)}
 pub fn host_count(id:&str)->u32 {state().lock().ok().and_then(|s|s.host.and_then(|uuid|s.players.get(&uuid)).and_then(|f|f.get(id)).copied()).unwrap_or(0)}
 pub fn host_uuid()->Option<u128> {state().lock().ok().and_then(|s|s.host)}
+pub fn set_host_uuid(uuid:Option<u128>) {if let Ok(mut s)=state().lock(){s.host=uuid;}}
 pub fn guest_for(uuid:u128)->Option<u32> {state().lock().ok().and_then(|s|s.guests.iter().find_map(|(conn,id)|(*id==uuid).then_some(*conn)))}
 pub fn entity_for(uuid:u128)->Option<i32> {state().lock().ok().and_then(|s|s.entities.iter().find_map(|(entity,id)|(*id==uuid).then_some(*entity)))}
 pub fn update_player(uuid:u128,entity:i32,guest:Option<u32>,flags:Flags) {if let Ok(mut s)=state().lock(){s.entities.insert(entity,uuid);if let Some(conn)=guest{s.guests.insert(conn,uuid);}else{s.host=Some(uuid);}s.players.insert(uuid,flags);}}

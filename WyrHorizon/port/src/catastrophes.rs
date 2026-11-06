@@ -5,21 +5,35 @@ use std::collections::VecDeque;
 use std::collections::BTreeMap;
 use std::sync::Mutex;
 static AUTHORIZED: Mutex<BTreeMap<u128, i64>> = Mutex::new(BTreeMap::new());
+static HOST_CONTEXT: Mutex<Option<(u128, String)>> = Mutex::new(None);
 thread_local! { static WAITING: RefCell<VecDeque<(u8,[f64;3])>> = RefCell::new(VecDeque::new()); }
 pub const CHANNEL: &str = "wyr:catastrophe";
 pub const NAMES: [&str; 6] = ["Чёрная дыра", "Метеоритный шторм", "Убийца планет", "Жезл Бога", "Провал грунта", "Боевой заряд"];
+
+/// Runs at ServerTickEnd, outside as_guest. The integrated owner is also a
+/// guest internally, so `lan_acting.is_none()` cannot identify their UUID.
+pub(in crate::game) fn refresh_host(game:&Game<'_>) {
+    let owner=game.lan.as_ref().and_then(|h|h.hub.singleplayer_owner);
+    horizon_world::wyr_shared::set_host_uuid(owner);
+    let context=owner.and_then(|uuid|game.native_server_players().into_iter().find(|p|p.uuid==uuid).map(|p|(uuid,p.dimension)));
+    *HOST_CONTEXT.lock().unwrap_or_else(|e|e.into_inner())=context;
+}
 
 /// Called by the authoritative WYR countdown for this player. Coordinates are
 /// captured at zero, rather than when the warning first appeared.
 pub(in crate::game) fn dispatch(game: &mut Game<'_>, player: u128, number: u8, at: [f64; 3]) -> bool {
     if !(1..=6).contains(&number) || at.iter().any(|v| !v.is_finite()) { return false; }
-    let Some(host) = horizon_world::wyr_shared::host_uuid() else { return false; };
+    if game.lan.is_some() {refresh_host(game);}
+    let Some((host,dimension)) = HOST_CONTEXT.lock().unwrap_or_else(|e|e.into_inner()).clone() else { return false; };
     // The host's native engine performs the server-authorized event. A guest
     // never receives a console permission grant. Cross-dimension rendering and
     // dedicated servers need a separate server playback host.
-    let players=game.native_server_players();
-    let Some(source)=players.iter().find(|p|p.uuid==player) else{return false;};
-    if !players.iter().any(|p|p.uuid==host && p.dimension==source.dimension) {return false;}
+    // Actor hooks borrow the hub out of game.lan. Their live player snapshot
+    // remains available even though native_server_players is then empty.
+    let source=game.native_acting_player().filter(|p|p.uuid==player)
+        .or_else(||game.native_server_players().into_iter().find(|p|p.uuid==player));
+    let Some(source)=source else{return false;};
+    if dimension!=source.dimension {return false;}
     let mut data = vec![number];
     for v in at { data.extend_from_slice(&v.to_le_bytes()); }
     if game.native_net_send_to_player(host, CHANNEL, &data).is_err() {return false;}
@@ -53,9 +67,12 @@ pub(in crate::game) fn tick(game: &mut Game<'_>) {
 pub(in crate::game) fn clear() {
     WAITING.with(|q|q.borrow_mut().clear());
     AUTHORIZED.lock().unwrap_or_else(|e|e.into_inner()).clear();
+    *HOST_CONTEXT.lock().unwrap_or_else(|e|e.into_inner())=None;
 }
 pub(in crate::game) fn authorized_owner(game:&Game<'_>,player:u128)->bool {
-    if horizon_world::wyr_shared::host_uuid()!=Some(player){return false;}
+    let owner=game.lan.as_ref().and_then(|h|h.hub.singleplayer_owner)
+        .or_else(||HOST_CONTEXT.lock().unwrap_or_else(|e|e.into_inner()).as_ref().map(|c|c.0));
+    if owner!=Some(player){return false;}
     AUTHORIZED.lock().unwrap_or_else(|e|e.into_inner()).get(&player).is_some_and(|until|game.world.game_time<*until)
 }
 

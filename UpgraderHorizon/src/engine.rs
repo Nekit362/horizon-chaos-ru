@@ -16,6 +16,7 @@ struct Server {
     queue: BTreeMap<u128, VecDeque<Value>>,
     prices: BTreeMap<String,f64>,
     catalog: Vec<Value>,
+    missing_device_reported: bool,
 }
 #[derive(Clone, Default)]
 struct Player {
@@ -29,6 +30,8 @@ struct Pending { target: String, count: u32, requested: u32, win: bool, ticks: u
 #[derive(Default)]
 struct Client {
     catalog: Vec<Value>,
+    catalog_names_dirty: bool,
+    catalog_language: Option<(String,usize)>,
     queue: VecDeque<Value>,
     open: bool,
     selected: Option<usize>,
@@ -123,8 +126,12 @@ fn send_catalog(game:&mut Game<'_>, uuid:u128, server:&Server) {
 }
 
 pub fn tick(game:&mut Game<'_>) {
-    if !game.native_on(ID) || game.remote.is_some() || game.player.is_none() {return;}
-    let uuid=game.native_acting_id();
+    // Singleplayer also uses a network client and an authoritative server Game.
+    // This hook runs with the server player's inventory swapped into Game; a
+    // window's `remote` field is not a reliable test of that execution context.
+    if game.native_window() || !game.native_on(ID) {return;}
+    let Some(who)=game.native_acting_player() else {return;};
+    let uuid=who.uuid;
     let Some(world)=game.native_world_dir() else {return;};
     SERVER.with(|state| {
         let mut server=state.borrow_mut();
@@ -132,8 +139,13 @@ pub fn tick(game:&mut Game<'_>) {
         if server.catalog.is_empty() {build_catalog(game,&mut server);}
         let Ok(mut player)=game.native_attachments(Holder::Player(uuid)).and_then(|a|a.get(&PLAYER_STATE)) else {return;};
         player.tick=player.tick.wrapping_add(1);
-        if !player.granted && game.res.items().get(DEVICE).is_some() {
-            if game.native_give_items(DEVICE,1)==1 {
+        if !player.granted {
+            if game.res.items().get(DEVICE).is_none() {
+                if !server.missing_device_reported {
+                    log::error!("Upgrader starter item {DEVICE} is missing from the active item registry; load the combined WYR content .hmod before opening the world");
+                    server.missing_device_reported=true;
+                }
+            } else if game.native_give_stack(uuid,ItemStack::new(DEVICE,1)).is_none() {
                 player.granted=true;
                 notify(game,uuid,"Вы получили Апгрейдер. ПКМ с предметом или клавиша U — открыть.");
             }
@@ -226,8 +238,8 @@ pub fn from_server(channel:&str,data:&[u8]) {
     let Ok(value)=serde_json::from_slice::<Value>(data) else {return;};
     CLIENT.with(|state|{
         let mut c=state.borrow_mut();
-        if value["catalog_reset"].as_bool()==Some(true) {c.catalog.clear();}
-        if let Some(items)=value["catalog"].as_array() {if c.catalog.len()<4096 {c.catalog.extend(items.iter().cloned());}}
+        if value["catalog_reset"].as_bool()==Some(true) {c.catalog.clear();c.catalog_names_dirty=true;}
+        if let Some(items)=value["catalog"].as_array() {if c.catalog.len()<4096 {c.catalog.extend(items.iter().cloned());c.catalog_names_dirty=true;}}
         if value["open"].as_bool()==Some(true) {c.open=true;}
         if let Some(v)=value["message"].as_str() {c.message=v.into();}
         if let Some(v)=value["odds"].as_f64() {c.odds=v;}
@@ -251,6 +263,7 @@ pub fn frame(game:&mut Game<'_>) {
     }
     let (open,queue)=CLIENT.with(|state|{
         let mut c=state.borrow_mut();
+        localize_catalog(game,&mut c);
         c.wheel.update(animation_time());
         (std::mem::take(&mut c.open),std::mem::take(&mut c.queue))
     });
@@ -264,6 +277,24 @@ pub fn frame(game:&mut Game<'_>) {
         }
     }
 }
+
+// Prices and item IDs belong to the server. Display names belong to the local
+// client's selected language, using the same stack-name resolver as HUD tooltips.
+// Rebuild once per catalog/language/resource-pack change, never once per row/frame.
+fn localize_catalog(game:&Game<'_>,c:&mut Client) {
+    let language=(horizon_client::lang::code(),std::sync::Arc::as_ptr(&game.pack.names) as usize);
+    let changed=c.catalog_language.as_ref()!=Some(&language);
+    if !changed && !c.catalog_names_dirty {return;}
+    for item in &mut c.catalog {
+        if let Some(id)=item["id"].as_str() {
+            let name=horizon_client::item_tooltip::name_line(&ItemStack::new(id,1),&|key|game.pack.names.display_get(key));
+            item["name"]=name.into();
+        }
+    }
+    c.catalog.sort_by_cached_key(|v|(v["name"].as_str().unwrap_or("").to_lowercase(),v["id"].as_str().unwrap_or("").to_owned()));
+    if changed {c.page=0;}
+    c.catalog_language=Some(language);c.catalog_names_dirty=false;
+}
 pub fn key(game:&mut Game<'_>,key:&str,pressed:bool) {
     if !pressed || !game.native_on(ID) || !game.native_window() || !game.native_playing() {return;}
     if key==game.native_mod_key(ID,"open","key.keyboard.u") {
@@ -273,10 +304,11 @@ pub fn key(game:&mut Game<'_>,key:&str,pressed:bool) {
 pub fn use_device(game:&mut Game<'_>,stack:&ItemStack,claimed:&mut bool) {
     if *claimed || &*stack.item!=DEVICE || !game.native_on(ID) {return;}
     *claimed=true;
-    if game.remote.is_none() {
-        let uuid=game.native_acting_id();
-        from_client(uuid,CHANNEL,b"{\"action\":\"open\"}");
-    } else {CLIENT.with(|s|s.borrow_mut().queue.push_back(json!({"action":"open"})));}
+    if game.native_window() {
+        CLIENT.with(|s|s.borrow_mut().queue.push_back(json!({"action":"open"})));
+    } else if let Some(who)=game.native_acting_player() {
+        from_client(who.uuid,CHANNEL,b"{\"action\":\"open\"}");
+    }
 }
 
 fn cut(game:&Game<'_>,text:&str,width:f32)->String {
